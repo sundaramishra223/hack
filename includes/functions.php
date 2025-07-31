@@ -306,4 +306,36 @@ function getHeroReel($id) {
     
     return null;
 }
+
+// Get featured slider items
+function getFeaturedSlider() {
+    global $conn;
+    
+    $query = "SELECT * FROM featured_slider WHERE is_active = 1 ORDER BY display_order ASC";
+    $result = runQuery($query);
+    $slides = [];
+    
+    if ($result) {
+        while ($row = fetchRow($result)) {
+            $slides[] = $row;
+        }
+    }
+    
+    return $slides;
+}
+
+// Get a specific slider item by ID
+function getSliderItem($id) {
+    global $conn;
+    
+    $id = (int) $id;
+    $query = "SELECT * FROM featured_slider WHERE id = $id";
+    $result = runQuery($query);
+    
+    if ($result && getNumRows($result) > 0) {
+        return fetchRow($result);
+    }
+    
+    return null;
+}
 ?>

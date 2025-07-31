@@ -329,39 +329,53 @@ error_reporting(E_ALL);
         <svg viewBox="0 0 24 24" fill="none"><path d="M8.5 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
-      <div class="featured-3d-slider-track" id="featured3dSliderTrack">
-        <?php
-          // ***** DEMO: EXACTLY 5 SLIDES *****
-          $slides = [
-            [ 'img'=>'uploads/featured/slide1.jpg', 'title'=>'Bold Brand Reveal',    'sub'=>'Launch Teaser • Motion + Sound Design' ],
-            [ 'img'=>'uploads/featured/slide2.jpg', 'title'=>'Summer Drop Film',     'sub'=>'Fashion Promo • Color‑graded & Cutdowns' ],
-            [ 'img'=>'uploads/featured/slide3.jpg', 'title'=>'App Intro Sequence',   'sub'=>'UI Animations • 3D Transitions' ],
-            [ 'img'=>'uploads/featured/slide4.jpg', 'title'=>'Product Hero Loop',    'sub'=>'CGI Packshot • Realistic Lighting' ],
-            [ 'img'=>'uploads/featured/slide5.jpg', 'title'=>'Festival Opener',      'sub'=>'Kinetic Type • Beat‑Synced Edits' ],
-          ];
-          // render five slides
-          for ($i=0; $i<count($slides); $i++) {
-            $s = $slides[$i];
-            $img = htmlspecialchars($s['img']);
-            $title = htmlspecialchars($s['title']);
-            echo '<div class="featured-3d-slide" data-slide-idx="'.$i.'">';
-              // fallback gradient if image missing
-              echo '<img src="'.$img.'" alt="'.$title.'" onerror="this.style.display=\'none\'; this.parentElement.style.background=\'linear-gradient(135deg,#2a2a2a,#1f1f1f)\';">';
-            echo '</div>';
-          }
-        ?>
+             <div class="featured-3d-slider-track" id="featured3dSliderTrack">
+         <?php
+           // Get slider data from database
+           $slides = getFeaturedSlider();
+           
+           // If no slides in database, use demo data as fallback
+           if (empty($slides)) {
+             $slides = [
+               [ 'image_path'=>'uploads/featured/slide1.jpg', 'title'=>'Bold Brand Reveal',    'subtitle'=>'Launch Teaser • Motion + Sound Design' ],
+               [ 'image_path'=>'uploads/featured/slide2.jpg', 'title'=>'Summer Drop Film',     'subtitle'=>'Fashion Promo • Color‑graded & Cutdowns' ],
+               [ 'image_path'=>'uploads/featured/slide3.jpg', 'title'=>'App Intro Sequence',   'subtitle'=>'UI Animations • 3D Transitions' ],
+               [ 'image_path'=>'uploads/featured/slide4.jpg', 'title'=>'Product Hero Loop',    'subtitle'=>'CGI Packshot • Realistic Lighting' ],
+               [ 'image_path'=>'uploads/featured/slide5.jpg', 'title'=>'Festival Opener',      'subtitle'=>'Kinetic Type • Beat‑Synced Edits' ],
+             ];
+           }
+           
+           // Render slides
+           for ($i=0; $i<count($slides); $i++) {
+             $s = $slides[$i];
+             $img = htmlspecialchars($s['image_path']);
+             $title = htmlspecialchars($s['title']);
+             echo '<div class="featured-3d-slide" data-slide-idx="'.$i.'">';
+               // fallback gradient if image missing
+               echo '<img src="'.$img.'" alt="'.$title.'" onerror="this.style.display=\'none\'; this.parentElement.style.background=\'linear-gradient(135deg,#2a2a2a,#1f1f1f)\';">';
+             echo '</div>';
+           }
+         ?>
       </div>
     </div>
   </div>
 
   <script>
-    // ***** DEMO: EXACTLY 5 SLIDES (same order as PHP above) *****
+    // ***** SLIDER DATA FROM DATABASE *****
     const SLIDES_DATA = [
-      {img:'uploads/featured/slide1.jpg', title:'Bold Brand Reveal',  sub:'Launch Teaser • Motion + Sound Design'},
-      {img:'uploads/featured/slide2.jpg', title:'Summer Drop Film',   sub:'Fashion Promo • Color‑graded & Cutdowns'},
-      {img:'uploads/featured/slide3.jpg', title:'App Intro Sequence', sub:'UI Animations • 3D Transitions'},
-      {img:'uploads/featured/slide4.jpg', title:'Product Hero Loop',  sub:'CGI Packshot • Realistic Lighting'},
-      {img:'uploads/featured/slide5.jpg', title:'Festival Opener',    sub:'Kinetic Type • Beat‑Synced Edits'}
+      <?php
+        // Output the same slides data for JavaScript
+        $jsSlides = [];
+        foreach ($slides as $slide) {
+          $jsSlides[] = sprintf(
+            "{img:'%s', title:'%s', sub:'%s'}",
+            addslashes($slide['image_path']),
+            addslashes($slide['title']),
+            addslashes($slide['subtitle'])
+          );
+        }
+        echo implode(",\n      ", $jsSlides);
+      ?>
     ];
 
     const track = document.getElementById('featured3dSliderTrack');

@@ -13,18 +13,21 @@ $teamQuery = "SELECT COUNT(*) as count FROM team";
 $portfolioQuery = "SELECT COUNT(*) as count FROM portfolio";
 $brandLogosQuery = "SELECT COUNT(*) as count FROM brand_logos";
 $heroReelsQuery = "SELECT COUNT(*) as count FROM hero_reels";
+$sliderQuery = "SELECT COUNT(*) as count FROM featured_slider";
 
 $servicesResult = runQuery($servicesQuery);
 $teamResult = runQuery($teamQuery);
 $portfolioResult = runQuery($portfolioQuery);
 $brandLogosResult = runQuery($brandLogosQuery);
 $heroReelsResult = runQuery($heroReelsQuery);
+$sliderResult = runQuery($sliderQuery);
 
 $servicesCount = fetchRow($servicesResult)['count'] ?? 0;
 $teamCount = fetchRow($teamResult)['count'] ?? 0;
 $portfolioCount = fetchRow($portfolioResult)['count'] ?? 0;
 $brandLogosCount = fetchRow($brandLogosResult)['count'] ?? 0;
 $heroReelsCount = fetchRow($heroReelsResult)['count'] ?? 0;
+$sliderCount = fetchRow($sliderResult)['count'] ?? 0;
 
 // Get recent portfolio items
 $recentPortfolioQuery = "SELECT * FROM portfolio ORDER BY id DESC LIMIT 5";
@@ -41,7 +44,7 @@ include 'includes/header.php';
     <h1 class="text-3xl font-bold text-[#2B2B2A] mb-8">Dashboard</h1>
     
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
         <!-- Services Stat -->
         <div class="admin-card">
             <div class="flex justify-between items-center mb-4">
@@ -109,6 +112,20 @@ include 'includes/header.php';
             <div class="admin-stat"><?php echo $heroReelsCount; ?></div>
             <a href="hero-reels.php" class="text-[#F44B12] text-sm hover:underline mt-2 inline-block">
                 Manage Reels <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+        
+        <!-- Featured Slider Stat -->
+        <div class="admin-card">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-[#2B2B2A]">Slider Items</h3>
+                <div class="w-10 h-10 bg-[#F44B12]/10 rounded-full flex items-center justify-center">
+                    <i class="fas fa-sliders-h text-[#F44B12]"></i>
+                </div>
+            </div>
+            <div class="admin-stat"><?php echo $sliderCount; ?></div>
+            <a href="slider.php" class="text-[#F44B12] text-sm hover:underline mt-2 inline-block">
+                Manage Slider <i class="fas fa-arrow-right ml-1"></i>
             </a>
         </div>
     </div>

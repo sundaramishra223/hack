@@ -128,6 +128,12 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="slider.php" class="flex items-center py-3 px-4 hover:bg-gray-700 transition duration-200">
+                            <i class="fas fa-sliders-h w-6"></i>
+                            <span class="nav-item-text ml-3">Featured Slider</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="brand-logos.php" class="flex items-center py-3 px-4 hover:bg-gray-700 transition duration-200">
                             <i class="fas fa-building w-6"></i>
                             <span class="nav-item-text ml-3">Brand Logos</span>

@@ -45,6 +45,26 @@ CREATE TABLE IF NOT EXISTS portfolio (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Featured slider table
+CREATE TABLE IF NOT EXISTS featured_slider (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    subtitle VARCHAR(255) NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    display_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert demo slider data
+INSERT INTO featured_slider (title, subtitle, image_path, display_order) VALUES
+('Bold Brand Reveal', 'Launch Teaser • Motion + Sound Design', 'uploads/featured/slide1.jpg', 1),
+('Summer Drop Film', 'Fashion Promo • Color‑graded & Cutdowns', 'uploads/featured/slide2.jpg', 2),
+('App Intro Sequence', 'UI Animations • 3D Transitions', 'uploads/featured/slide3.jpg', 3),
+('Product Hero Loop', 'CGI Packshot • Realistic Lighting', 'uploads/featured/slide4.jpg', 4),
+('Festival Opener', 'Kinetic Type • Beat‑Synced Edits', 'uploads/featured/slide5.jpg', 5);
+
 -- Portfolio images table
 CREATE TABLE IF NOT EXISTS portfolio_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
